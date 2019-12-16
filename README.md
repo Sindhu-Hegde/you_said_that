@@ -3,7 +3,7 @@
 Implementation of [You said that?](https://www.robots.ox.ac.uk/~vgg/publications/2017/Chung17b/chung17b.pdf) in Python.
 
 ### Prerequisites
- - Python
+ - Python3
  - cuda
  - ffmpeg
  - librosa
