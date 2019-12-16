@@ -20,16 +20,21 @@ Implementation of [You said that?](https://www.robots.ox.ac.uk/~vgg/publications
 
  
 
- 1. **Feature extraction:** Extract and store the audio and identity features 
-`python3 extract_features.py -d=data/`
+ 1. **Feature extraction:** Extract and store the audio and identity features
+ 
+	`python3 extract_features.py -d=data/`
+
  2. **Data preparation:** Prepare the training data 
- `python3 prepare_data.py -f=features/ -p=processed_data/`
+ 
+	`python3 prepare_data.py -f=features/ -p=processed_data/`
  
  3. **Train:** Train the model using the processed data
-  `python3 train.py -a=audio_features.pkl -i=identity_features.pkl -gt=gt_features.pkl`
+ 
+  	`python3 train.py -a=audio_features.pkl -i=identity_features.pkl -gt=gt_features.pkl`
   
- 4. **Generate video:** Generate the output video for a given audio and image input. 
- `python3 predict.py -m=saved_models/model.h5 -t=1.mp4 -f=frame.jpg`
+ 4. **Generate video:** Generate the output video for a given audio and image input 
+ 
+ 	`python3 predict.py -m=saved_models/model.h5 -t=1.mp4 -f=frame.jpg`
 
 	
 Following are the other train parameters that can be tuned: 
