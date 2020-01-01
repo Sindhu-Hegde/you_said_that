@@ -1,26 +1,23 @@
-import librosa
 import subprocess
 import os
+from python_speech_features import mfcc
+import scipy.io.wavfile as wav
 
-def extract_mfcc(input_file, sr=55000, n_mfcc=13):
-	
-	extension = input_file.split(".")[1]
-	wav_file = input_file
 
-	if(extension == ".mp4"):
-		wav_file  = 'tmp.wav';
 
-		subprocess.call('ffmpeg -threads 1 -y -i %s -async 1 -ac 1 -vn -acodec pcm_s16le -ar 16000 %s' % \
-			(input_file, wav_file), shell=True)
+def extract_mfcc(input_file, sr=16000, n_mfcc=13, lowfreq=300, highfreq=3700, nfilt=40):
+	wav_file  = 'tmp.wav';
 
-	
-	x, sr = librosa.load(wav_file, sr=55000)
+	subprocess.call('ffmpeg -hide_banner -loglevel panic -threads 1 -y -i %s -async 1 -ac 1 -vn \
+					-acodec pcm_s16le -ar 16000 %s' % (input_file, wav_file), shell=True)
 
-	mfccs = librosa.feature.mfcc(x, sr=sr, n_mfcc=13)
-	mfccs = mfccs[1:]
-	print(mfccs.shape)
 
-	if(extension == ".mp4"):
-		os.remove(wav_file)
+
+	(rate,sig) = wav.read(wav_file)
+	mfcc_feat = mfcc(sig,rate, lowfreq=lowfreq, highfreq=highfreq, nfilt=nfilt)
+	mfccs = mfcc_feat[:,1:].T 
+	#print(mfccs.shape)
+
+	os.remove(wav_file)
 
 	return mfccs
