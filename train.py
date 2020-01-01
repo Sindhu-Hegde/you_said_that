@@ -32,12 +32,12 @@ def transposed_convolution(x, filters, kernel_size=3, strides=1, padding='same')
 	return x
 
 
-def model(files, epochs, steps_per_epoch, gpus, num_still_images, model_dir):
+def model(files, batch_size, epochs, steps_per_epoch, gpus, num_still_images, model_dir):
 
 	
 	train_files, val_files = train_test_split(np.array(files), test_size=0.1)
-	training_generator = DataGenerator(train_files, num_still_images)
-	validation_generator = DataGenerator(val_files, num_still_images)
+	training_generator = DataGenerator(train_files, batch_size, num_still_images)
+	validation_generator = DataGenerator(val_files, batch_size, num_still_images)
 
 
 	# Audio encoder
@@ -123,12 +123,16 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 	parser.add_argument('-f', '--feature_path', help='Feature path (path containing the saved audio \
 						and frames')	
-	parser.add_argument('-e', '--epochs', default=20, help='No of epochs to train the model')
-	parser.add_argument('-spe', '--steps_per_epoch', default=1000, help='No of steps per epoch')
+	parser.add_argument('-b', '--batch_size', default=64, required=False, \
+						help='Batch size to train the model')
+	parser.add_argument('-e', '--epochs', default=20, required=False, \
+						help='No of epochs to train the model')
+	parser.add_argument('-spe', '--steps_per_epoch', default=1000, required=False, \
+						help='No of steps per epoch')
 	parser.add_argument('-g', '--no_of_gpus', default=1, required=False, help='No of GPUs')
 	parser.add_argument('-s', '--no_of_still_images', default=1, required=False, \
 						help='No of still images')
-	parser.add_argument('-md', '--model_directory', default='saved_models', \
+	parser.add_argument('-md', '--model_directory', default='saved_models/', \
 						help='Path to save the model')
 
 	args = parser.parse_args()
@@ -151,7 +155,7 @@ if __name__ == '__main__':
 			files.extend(file)
 
 		
-	model(files, int(args.epochs), int(args.steps_per_epoch), int(args.no_of_gpus), \
+	model(files, int(args.batch_size), int(args.epochs), int(args.steps_per_epoch), int(args.no_of_gpus), \
 			int(args.no_of_still_images), args.model_directory)
 
 	
