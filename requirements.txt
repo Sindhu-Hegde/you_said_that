@@ -35,7 +35,7 @@ monotonic==1.5
 numba==0.46.0
 numpy==1.17.4
 oauthlib==3.1.0
-opencv-python==4.1.2.30
+opencv-python==4.2.0.32
 opt-einsum==3.1.0
 Pillow==6.2.1
 progressbar==2.5
