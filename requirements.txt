@@ -40,7 +40,7 @@ opt-einsum==3.1.0
 Pillow==6.2.1
 progressbar==2.5
 property-manager==2.3.1
-protobuf==3.11.1
+protobuf==3.18.3
 pyasn1==0.4.8
 pyasn1-modules==0.2.7
 pycparser==2.19
